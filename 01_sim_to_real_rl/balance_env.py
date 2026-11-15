@@ -6,9 +6,13 @@ import mujoco.viewer
 
 
 class BalanceBotEnv(gym.Env):
-    def __init__(self):
+    def __init__(self, damping_range=(0.001, 0.02)):
         super().__init__()
-        
+        # Hinge damping is sampled from this range every episode. Swing-up with the 10 N motor is only
+        # physically possible up to ~0.02 (trajectory optimization finds no solution above ~0.022), so the
+        # default stays inside that. The original range (0.001, 0.05) is 60% unsolvable episodes.
+        self.damping_range = damping_range
+
         # The same XML from yesterday's Hello World, but now with a hinge joint (a pendulum)
         xml = """
         <mujoco>
@@ -52,7 +56,7 @@ class BalanceBotEnv(gym.Env):
         self.model.body_mass[pole_id]=0.1*self.np_random.uniform(0.7,1.3)
 
         hinge_id = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_JOINT, "hinge")
-        self.model.dof_damping[hinge_id]=self.np_random.uniform(0.001,0.05)
+        self.model.dof_damping[hinge_id]=self.np_random.uniform(*self.damping_range)
 
         mujoco.mj_resetData(self.model, self.data)
         self.steps = 0

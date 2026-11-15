@@ -1,11 +1,12 @@
 """Headless eval of a saved policy.
 
-    python3 eval.py [policy_name_without_zip] [ppo|sac] [n_seeds]
+    python3 eval.py [policy_name_without_zip] [ppo|sac] [n_seeds] [damping_max]
 
 Per seed it counts steps within 0.2 rad of upright, the longest continuous hold, and whether the
 pole is still balanced at the end of the episode (last 50 steps all within 0.2 rad).
-With 50+ seeds it also prints the balanced-at-end rate by sampled hinge damping, because
-reset() randomizes damping per episode and that is what decides success.
+damping_max sets the evaluation range U(0.001, damping_max); default 0.02 (the solvable range),
+use 0.05 for the original wide range. With 50+ seeds it also prints balanced-at-end by sampled
+hinge damping, because that is what decided success on the wide range.
 """
 import sys
 import numpy as np
@@ -13,12 +14,13 @@ import mujoco
 from stable_baselines3 import PPO, SAC
 from balance_env import BalanceBotEnv
 
-name = sys.argv[1] if len(sys.argv) > 1 else "mujoco_sac"
+name = sys.argv[1] if len(sys.argv) > 1 else "mujoco_sac_feasible"
 algo = (sys.argv[2] if len(sys.argv) > 2 else "sac").lower()
 n_seeds = int(sys.argv[3]) if len(sys.argv) > 3 else 8
+damping_max = float(sys.argv[4]) if len(sys.argv) > 4 else 0.02
 
 model = (SAC if algo == "sac" else PPO).load(name, device="cpu")
-env = BalanceBotEnv()
+env = BalanceBotEnv(damping_range=(0.001, damping_max))
 hinge = mujoco.mj_name2id(env.model, mujoco.mjtObj.mjOBJ_JOINT, "hinge")
 
 ups, damps, balanced = [], [], []
@@ -53,11 +55,11 @@ for s in range(n_seeds):
               f"ended={'cart-limit' if d else 'time'}")
 
 balanced, damps = np.array(balanced), np.array(damps)
-print(f"mean steps_upright {np.mean(ups):.1f}/500")
+print(f"damping range U(0.001, {damping_max}); mean steps_upright {np.mean(ups):.1f}/500")
 print(f"balanced at end: {balanced.sum()}/{n_seeds} = {balanced.mean():.2f}")
 if n_seeds >= 50:
     print("balanced at end by hinge damping:")
-    for lo, hi in [(0.0, 0.01), (0.01, 0.02), (0.02, 0.03), (0.03, 0.04), (0.04, 0.051)]:
-        m = (damps >= lo) & (damps < hi)
+    for lo in np.arange(0.0, damping_max, 0.005):
+        m = (damps >= lo) & (damps < lo + 0.005)
         if m.any():
-            print(f"  damping {lo:.2f}-{hi:.2f}: {balanced[m].sum():3d}/{m.sum():3d} = {balanced[m].mean():.2f}")
+            print(f"  damping {lo:.3f}-{lo + 0.005:.3f}: {balanced[m].sum():3d}/{m.sum():3d} = {balanced[m].mean():.2f}")

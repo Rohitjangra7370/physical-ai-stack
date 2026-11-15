@@ -5,3 +5,6 @@ ppo_tensorboard/
 .venv/
 sac_tensorboard/
 train_sac.log
+checkpoints/
+*.log
+sac_*.zip
