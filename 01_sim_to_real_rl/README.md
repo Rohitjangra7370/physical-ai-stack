@@ -1,5 +1,7 @@
 # Inverted Pendulum (MuJoCo + RL)
 
+> Module 01 of [physical-ai-stack](../README.md). Run the commands below from this folder.
+
 Cart-pole **swing-up**: the pole starts hanging down and must be swung up and balanced by pushing the cart.
 Custom Gymnasium + MuJoCo environment, trained with Stable-Baselines3.
 
@@ -78,7 +80,7 @@ Each SAC run took about 25-35 minutes on CPU (two runs in parallel, 4 threads ea
 - Cost: one gradient update per env step, so about 100-200 steps/s on CPU against PPO's ~2,400, but far fewer steps needed.
 
 ## Feasibility
-The first SAC policy balanced only 33% of episodes, and every failure had high hinge damping. Instead of training longer,
+The first SAC policy balanced only 33% of episodes, and 191 of the 201 failures had hinge damping above 0.02. Instead of training longer,
 `feasibility.py` checks whether those episodes can be solved at all: a cross-entropy search over open-loop cart forces
 (125 knots, 20 s, +-3 m, 10 N) for the highest point the pole reaches. `max cos(phi) = +1` means upright.
 
