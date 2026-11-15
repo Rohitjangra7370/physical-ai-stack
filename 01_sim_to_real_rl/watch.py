@@ -6,7 +6,7 @@ from stable_baselines3 import PPO, SAC
 from balance_env import BalanceBotEnv
 import numpy as np
 
-policy_name = sys.argv[1] if len(sys.argv) > 1 else "mujoco_sac"
+policy_name = sys.argv[1] if len(sys.argv) > 1 else "mujoco_sac_feasible"
 algo = (sys.argv[2] if len(sys.argv) > 2 else "sac").lower()
 
 
