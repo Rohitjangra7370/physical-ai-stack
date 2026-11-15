@@ -3,7 +3,7 @@ import sys
 import time
 import mujoco.viewer
 from stable_baselines3 import PPO, SAC
-from balance_env import BalanceBotEnv
+from balance_env import BalanceBotEnv, policy_path
 import numpy as np
 
 policy_name = sys.argv[1] if len(sys.argv) > 1 else "mujoco_sac_feasible"
@@ -14,7 +14,7 @@ print("Loading Physical AI environment...")
 env = BalanceBotEnv()
 
 print("Loading the trained brain...")
-model = (SAC if algo == "sac" else PPO).load(policy_name, device="cpu")
+model = (SAC if algo == "sac" else PPO).load(policy_path(policy_name), device="cpu")
 
 obs, _ = env.reset()
 

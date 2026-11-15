@@ -12,14 +12,14 @@ import sys
 import numpy as np
 import mujoco
 from stable_baselines3 import PPO, SAC
-from balance_env import BalanceBotEnv
+from balance_env import BalanceBotEnv, policy_path
 
 name = sys.argv[1] if len(sys.argv) > 1 else "mujoco_sac_feasible"
 algo = (sys.argv[2] if len(sys.argv) > 2 else "sac").lower()
 n_seeds = int(sys.argv[3]) if len(sys.argv) > 3 else 8
 damping_max = float(sys.argv[4]) if len(sys.argv) > 4 else 0.02
 
-model = (SAC if algo == "sac" else PPO).load(name, device="cpu")
+model = (SAC if algo == "sac" else PPO).load(policy_path(name), device="cpu")
 env = BalanceBotEnv(damping_range=(0.001, damping_max))
 hinge = mujoco.mj_name2id(env.model, mujoco.mjtObj.mjOBJ_JOINT, "hinge")
 

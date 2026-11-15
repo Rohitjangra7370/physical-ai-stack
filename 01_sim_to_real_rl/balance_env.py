@@ -3,6 +3,23 @@ import numpy as np
 import mujoco
 import time
 import mujoco.viewer
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+
+
+def policy_path(name):
+    """Find a saved policy by name, with or without .zip.
+
+    Looks in the current folder first, then next to this file, so the scripts work from any folder
+    (an editor's Run button, for example, starts in the workspace root).
+    """
+    stem = name[:-4] if name.endswith(".zip") else name
+    for base in (Path.cwd(), HERE):
+        if (base / f"{stem}.zip").exists():
+            return str(base / stem)
+    have = ", ".join(sorted(p.stem for p in HERE.glob("*.zip"))) or "none"
+    raise FileNotFoundError(f"no policy '{stem}.zip' in {Path.cwd()} or {HERE} (available: {have})")
 
 
 class BalanceBotEnv(gym.Env):
