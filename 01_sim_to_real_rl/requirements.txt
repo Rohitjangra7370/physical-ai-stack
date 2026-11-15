@@ -4,3 +4,4 @@ stable-baselines3>=2.3
 numpy
 torch
 tensorboard
+pillow
