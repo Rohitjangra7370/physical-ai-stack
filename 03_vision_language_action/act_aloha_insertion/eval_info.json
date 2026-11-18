@@ -1,0 +1,118 @@
+{
+  "per_task": [
+    {
+      "task_group": "AlohaInsertion-v0",
+      "task_id": 0,
+      "metrics": {
+        "sum_rewards": [
+          215.0,
+          428.0,
+          453.0,
+          450.0,
+          185.0,
+          363.0,
+          224.0,
+          443.0,
+          220.0,
+          253.0
+        ],
+        "max_rewards": [
+          4.0,
+          3.0,
+          3.0,
+          3.0,
+          4.0,
+          3.0,
+          4.0,
+          3.0,
+          4.0,
+          4.0
+        ],
+        "successes": [
+          true,
+          false,
+          false,
+          false,
+          true,
+          false,
+          true,
+          false,
+          true,
+          true
+        ],
+        "video_paths": [
+          "outputs/eval/2026-11-18/18-25-14_aloha_act/videos/AlohaInsertion-v0_0/eval_episode_0.mp4",
+          "outputs/eval/2026-11-18/18-25-14_aloha_act/videos/AlohaInsertion-v0_0/eval_episode_1.mp4",
+          "outputs/eval/2026-11-18/18-25-14_aloha_act/videos/AlohaInsertion-v0_0/eval_episode_2.mp4",
+          "outputs/eval/2026-11-18/18-25-14_aloha_act/videos/AlohaInsertion-v0_0/eval_episode_3.mp4",
+          "outputs/eval/2026-11-18/18-25-14_aloha_act/videos/AlohaInsertion-v0_0/eval_episode_4.mp4",
+          "outputs/eval/2026-11-18/18-25-14_aloha_act/videos/AlohaInsertion-v0_0/eval_episode_5.mp4",
+          "outputs/eval/2026-11-18/18-25-14_aloha_act/videos/AlohaInsertion-v0_0/eval_episode_6.mp4",
+          "outputs/eval/2026-11-18/18-25-14_aloha_act/videos/AlohaInsertion-v0_0/eval_episode_7.mp4",
+          "outputs/eval/2026-11-18/18-25-14_aloha_act/videos/AlohaInsertion-v0_0/eval_episode_8.mp4",
+          "outputs/eval/2026-11-18/18-25-14_aloha_act/videos/AlohaInsertion-v0_0/eval_episode_9.mp4"
+        ],
+        "predicted_video_paths": []
+      },
+      "n_episodes": 10,
+      "n_success": 5,
+      "pc_success": 50.0,
+      "pc_success_ci95": [
+        23.659309051256404,
+        76.3406909487436
+      ]
+    }
+  ],
+  "per_group": {
+    "AlohaInsertion-v0": {
+      "avg_sum_reward": 323.4,
+      "avg_max_reward": 3.5,
+      "pc_success": 50.0,
+      "n_episodes": 10,
+      "n_success": 5,
+      "pc_success_ci95": [
+        23.659309051256404,
+        76.3406909487436
+      ],
+      "video_paths": [
+        "outputs/eval/2026-11-18/18-25-14_aloha_act/videos/AlohaInsertion-v0_0/eval_episode_0.mp4",
+        "outputs/eval/2026-11-18/18-25-14_aloha_act/videos/AlohaInsertion-v0_0/eval_episode_1.mp4",
+        "outputs/eval/2026-11-18/18-25-14_aloha_act/videos/AlohaInsertion-v0_0/eval_episode_2.mp4",
+        "outputs/eval/2026-11-18/18-25-14_aloha_act/videos/AlohaInsertion-v0_0/eval_episode_3.mp4",
+        "outputs/eval/2026-11-18/18-25-14_aloha_act/videos/AlohaInsertion-v0_0/eval_episode_4.mp4",
+        "outputs/eval/2026-11-18/18-25-14_aloha_act/videos/AlohaInsertion-v0_0/eval_episode_5.mp4",
+        "outputs/eval/2026-11-18/18-25-14_aloha_act/videos/AlohaInsertion-v0_0/eval_episode_6.mp4",
+        "outputs/eval/2026-11-18/18-25-14_aloha_act/videos/AlohaInsertion-v0_0/eval_episode_7.mp4",
+        "outputs/eval/2026-11-18/18-25-14_aloha_act/videos/AlohaInsertion-v0_0/eval_episode_8.mp4",
+        "outputs/eval/2026-11-18/18-25-14_aloha_act/videos/AlohaInsertion-v0_0/eval_episode_9.mp4"
+      ],
+      "predicted_video_paths": []
+    }
+  },
+  "overall": {
+    "avg_sum_reward": 323.4,
+    "avg_max_reward": 3.5,
+    "pc_success": 50.0,
+    "n_episodes": 10,
+    "n_success": 5,
+    "pc_success_ci95": [
+      23.659309051256404,
+      76.3406909487436
+    ],
+    "eval_s": 43.003753423690796,
+    "eval_ep_s": 4.300375366210938,
+    "video_paths": [
+      "outputs/eval/2026-11-18/18-25-14_aloha_act/videos/AlohaInsertion-v0_0/eval_episode_0.mp4",
+      "outputs/eval/2026-11-18/18-25-14_aloha_act/videos/AlohaInsertion-v0_0/eval_episode_1.mp4",
+      "outputs/eval/2026-11-18/18-25-14_aloha_act/videos/AlohaInsertion-v0_0/eval_episode_2.mp4",
+      "outputs/eval/2026-11-18/18-25-14_aloha_act/videos/AlohaInsertion-v0_0/eval_episode_3.mp4",
+      "outputs/eval/2026-11-18/18-25-14_aloha_act/videos/AlohaInsertion-v0_0/eval_episode_4.mp4",
+      "outputs/eval/2026-11-18/18-25-14_aloha_act/videos/AlohaInsertion-v0_0/eval_episode_5.mp4",
+      "outputs/eval/2026-11-18/18-25-14_aloha_act/videos/AlohaInsertion-v0_0/eval_episode_6.mp4",
+      "outputs/eval/2026-11-18/18-25-14_aloha_act/videos/AlohaInsertion-v0_0/eval_episode_7.mp4",
+      "outputs/eval/2026-11-18/18-25-14_aloha_act/videos/AlohaInsertion-v0_0/eval_episode_8.mp4",
+      "outputs/eval/2026-11-18/18-25-14_aloha_act/videos/AlohaInsertion-v0_0/eval_episode_9.mp4"
+    ],
+    "predicted_video_paths": []
+  }
+}

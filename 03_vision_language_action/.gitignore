@@ -1,0 +1,8 @@
+# Upstream LeRobot clone (https://github.com/huggingface/lerobot; the commit used is in the README)
+# and everything it writes: checkpoints, optimizer state, eval videos.
+lerobot/
+outputs/
+wandb/
+*.safetensors
+*.pt
+*.pth
