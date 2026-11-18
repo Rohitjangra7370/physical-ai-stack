@@ -1,6 +1,6 @@
 # physical-ai-stack
 
-A bottom-up build of the physical AI stack: a physics simulator with a learned policy, GPU code for edge hardware, vision-language-action models, and learned world models. The thesis is that these belong in one pipeline, where sim-to-real reinforcement learning and bare-metal compute meet multimodal foundation models. Two of the four modules exist so far, in simulation and on one laptop GPU. The other two are placeholders and are marked as such.
+A bottom-up build of the physical AI stack: a physics simulator with a learned policy, GPU code for edge hardware, vision-language-action models, and learned world models. The thesis is that these belong in one pipeline, where sim-to-real reinforcement learning and bare-metal compute meet multimodal foundation models. Three of the four modules have working code so far, all in simulation or on one laptop GPU. The fourth is a placeholder and is marked as such.
 
 ![SAC policy swinging the pole up and holding it](01_sim_to_real_rl/docs/swingup.gif)
 
@@ -12,7 +12,7 @@ A bottom-up build of the physical AI stack: a physics simulator with a learned p
 |---|---|---|
 | [01_sim_to_real_rl](01_sim_to_real_rl/) | MuJoCo cart-pole swing-up, PPO vs SAC, a reachability check | Done, simulation only |
 | [02_bare_metal_compute](02_bare_metal_compute/) | CUDA kernels, unified memory, timing | One kernel and a timing breakdown |
-| [03_vision_language_action](03_vision_language_action/) | VLA fine-tuning with LeRobot and LoRA | Planned, not started |
+| [03_vision_language_action](03_vision_language_action/) | ACT policy trained with LeRobot; VLA fine-tuning with LoRA next | In progress: ACT done in simulation (5 of 10 episodes), no language input yet |
 | [04_predictive_world_models](04_predictive_world_models/) | Learned dynamics, planning in latent space | Planned, not started |
 
 ## 01: Sim-to-real RL
@@ -33,12 +33,17 @@ Simulation only. Randomizing mass and damping is groundwork for a transfer to ha
 
 Nothing has run on an edge board yet. The aim is GPU code for high-frequency control loops, and vector add is the warm-up.
 
-## 03 and 04
+## 03: Vision-language-action
 
-Both are planned, and each folder has a README with the intended scope.
+![ACT policy inserting a peg into a socket in simulation](03_vision_language_action/act_aloha_insertion/success_episode_0.gif)
 
-- **03, vision-language-action:** camera frames and a text command go through a transformer and come out as continuous motor commands. LeRobot, VLA fine-tuning with LoRA, action chunking.
-- **04, predictive world models:** a learned model that predicts future states in latent space, so the agent plans before it acts instead of calling MuJoCo.
+An ACT policy (Action Chunking with Transformers, 52M parameters) trained with LeRobot on 40 scripted demonstrations of the two-arm ALOHA insertion task: 20,000 steps, 47 minutes on the laptop GPU. In the simulator it completed the insertion in **5 of 10** episodes. Ten episodes only support "about half the time" (95% interval 24% to 76%), and the held-out loss fell at every checkpoint.
+
+ACT sees camera frames and joint state but no text, so this is the action-chunking half of the module. The language-conditioned part, a VLA fine-tuned with LoRA, is next. Commands, the training curve and caveats are in the [module README](03_vision_language_action/README.md).
+
+## 04: Predictive world models
+
+Planned, not started. A learned model that predicts future states in latent space, so the agent plans before it acts instead of calling MuJoCo.
 
 ## Run
 
@@ -52,3 +57,5 @@ python3 eval.py mujoco_sac_feasible sac 300
 cd 02_bare_metal_compute
 nvcc -O2 -o vector_add_timing vector_add_timing.cu && ./vector_add_timing
 ```
+
+Module 03 needs a LeRobot checkout and about an hour of GPU time. Its README has the commands.
